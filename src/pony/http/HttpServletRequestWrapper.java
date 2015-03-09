@@ -1,281 +1,211 @@
 package pony.http;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
 import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
 
-public class HttpServletRequestWrapper implements HttpServletRequest {
+/**
+ * Provides a convenient implementation of the HttpServletRequest interface that
+ * can be subclassed by developers wishing to adapt the request to a Servlet.
+ *
+ * <p>
+ * This class implements the Wrapper or Decorator pattern. Methods default to
+ * calling through to the wrapped request object.
+ * 
+ * @see javax.servlet.http.HttpServletRequest
+ * @since Servlet 2.3
+ */
 
-	@Override
-	public Object getAttribute(String name) {
-		// TODO Auto-generated method stub
-		return null;
+public class HttpServletRequestWrapper extends ServletRequestWrapper implements
+		HttpServletRequest {
+
+	/**
+	 * Constructs a request object wrapping the given request.
+	 * 
+	 * @throws java.lang.IllegalArgumentException
+	 *             if the request is null
+	 */
+	public HttpServletRequestWrapper(HttpServletRequest request) {
+		super(request);
 	}
 
-	@Override
-	public Enumeration<String> getAttributeNames() {
-		// TODO Auto-generated method stub
-		return null;
+	private HttpServletRequest _getHttpServletRequest() {
+		return (HttpServletRequest) super.getRequest();
 	}
 
-	@Override
-	public String getCharacterEncoding() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getContentLength() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getContentType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public InputStream getInputStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getLocalAddr() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Locale getLocale() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getLocalName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getLocalPort() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getParameter(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<String, String> getParameterMap() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Enumeration<String> getParameterNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String[] getParameterValues(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getProtocol() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BufferedReader getReader() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getRemoteAddr() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getRemoteHost() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getServerName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getServerPort() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void removeAttribute(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setAttribute(String name, Object obj) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setCharacterEncoding(String env) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String getContextPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	/**
+	 * The default behavior of this method is to return getCookies() on the
+	 * wrapped request object.
+	 */
 	public Cookie[] getCookies() {
-		// TODO Auto-generated method stub
-		return null;
+		return this._getHttpServletRequest().getCookies();
 	}
 
-	@Override
+	/**
+	 * The default behavior of this method is to return getDateHeader(String
+	 * name) on the wrapped request object.
+	 */
 	public long getDateHeader(String name) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this._getHttpServletRequest().getDateHeader(name);
 	}
 
-	@Override
+	/**
+	 * The default behavior of this method is to return getHeader(String name)
+	 * on the wrapped request object.
+	 */
 	public String getHeader(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this._getHttpServletRequest().getHeader(name);
 	}
 
-	@Override
+	/**
+	 * The default behavior of this method is to return getHeaderNames() on the
+	 * wrapped request object.
+	 */
+
 	public Enumeration<String> getHeaderNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return this._getHttpServletRequest().getHeaderNames();
+	}
+
+	/**
+	 * The default behavior of this method is to return getIntHeader(String
+	 * name) on the wrapped request object.
+	 */
+
+	public int getIntHeader(String name) {
+		return this._getHttpServletRequest().getIntHeader(name);
+	}
+
+	/**
+	 * The default behavior of this method is to return getMethod() on the
+	 * wrapped request object.
+	 */
+	public String getMethod() {
+		return this._getHttpServletRequest().getMethod();
+	}
+
+	/**
+	 * The default behavior of this method is to return getPathInfo() on the
+	 * wrapped request object.
+	 */
+	public String getPathInfo() {
+		return this._getHttpServletRequest().getPathInfo();
+	}
+
+	/**
+	 * The default behavior of this method is to return getPathTranslated() on
+	 * the wrapped request object.
+	 */
+
+	public String getPathTranslated() {
+		return this._getHttpServletRequest().getPathTranslated();
+	}
+
+	/**
+	 * The default behavior of this method is to return getContextPath() on the
+	 * wrapped request object.
+	 */
+	public String getContextPath() {
+		return this._getHttpServletRequest().getContextPath();
+	}
+
+	/**
+	 * The default behavior of this method is to return getQueryString() on the
+	 * wrapped request object.
+	 */
+	public String getQueryString() {
+		return this._getHttpServletRequest().getQueryString();
+	}
+
+	/**
+	 * The default behavior of this method is to return getRemoteUser() on the
+	 * wrapped request object.
+	 */
+	public String getRemoteUser() {
+		return this._getHttpServletRequest().getRemoteUser();
+	}
+
+	/**
+	 * The default behavior of this method is to return getRequestedSessionId()
+	 * on the wrapped request object.
+	 */
+	public String getRequestedSessionId() {
+		return this._getHttpServletRequest().getRequestedSessionId();
+	}
+
+	/**
+	 * The default behavior of this method is to return getRequestURI() on the
+	 * wrapped request object.
+	 */
+	public String getRequestURI() {
+		return this._getHttpServletRequest().getRequestURI();
+	}
+
+	/**
+	 * The default behavior of this method is to return getRequestURL() on the
+	 * wrapped request object.
+	 */
+	public StringBuffer getRequestURL() {
+		return this._getHttpServletRequest().getRequestURL();
+	}
+
+	/**
+	 * The default behavior of this method is to return getServletPath() on the
+	 * wrapped request object.
+	 */
+	public String getServletPath() {
+		return this._getHttpServletRequest().getServletPath();
+	}
+
+	/**
+	 * The default behavior of this method is to return getSession(boolean
+	 * create) on the wrapped request object.
+	 */
+	public HttpSession getSession(boolean create) {
+		return this._getHttpServletRequest().getSession(create);
+	}
+
+	/**
+	 * The default behavior of this method is to return getSession() on the
+	 * wrapped request object.
+	 */
+	public HttpSession getSession() {
+		return this._getHttpServletRequest().getSession();
+	}
+
+	/**
+	 * The default behavior of this method is to return
+	 * isRequestedSessionIdValid() on the wrapped request object.
+	 */
+
+	public boolean isRequestedSessionIdValid() {
+		return this._getHttpServletRequest().isRequestedSessionIdValid();
+	}
+
+	/**
+	 * The default behavior of this method is to return
+	 * isRequestedSessionIdFromCookie() on the wrapped request object.
+	 */
+	public boolean isRequestedSessionIdFromCookie() {
+		return this._getHttpServletRequest().isRequestedSessionIdFromCookie();
+	}
+
+	/**
+	 * The default behavior of this method is to return
+	 * isRequestedSessionIdFromURL() on the wrapped request object.
+	 */
+	public boolean isRequestedSessionIdFromURL() {
+		return this._getHttpServletRequest().isRequestedSessionIdFromURL();
+	}
+
+	/**
+	 * The default behavior of this method is to return
+	 * isRequestedSessionIdFromUrl() on the wrapped request object.
+	 */
+	public boolean isRequestedSessionIdFromUrl() {
+		return this._getHttpServletRequest().isRequestedSessionIdFromUrl();
 	}
 
 	@Override
 	public Enumeration<String> getHeaders() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getIntHeader(String name) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getMethod() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPathInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPathTranslated() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getQueryString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getRemoteUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getRequestedSessionId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getRequestURI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer getRequestURL() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getServletPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HttpSession getSession() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HttpSession getSession(boolean create) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isRequestedSessionIdFromCookie() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isRequestedSessionIdFromUrl() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isRequestedSessionIdFromURL() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isRequestedSessionIdValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return this._getHttpServletRequest().getHeaders();
 	}
 
 }

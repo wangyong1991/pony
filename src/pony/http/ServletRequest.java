@@ -1,7 +1,9 @@
 package pony.http;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
@@ -18,7 +20,7 @@ public interface ServletRequest {
 	
 	String getContentType();
 	
-	InputStream getInputStream();
+	InputStream getInputStream() throws IOException;
 	
 	String getLocalAddr();
 	
@@ -38,7 +40,7 @@ public interface ServletRequest {
 	
 	String getProtocol();
 	
-	BufferedReader getReader();
+	BufferedReader getReader() throws IOException;
 	
 	String getRemoteAddr();
 	
@@ -52,5 +54,7 @@ public interface ServletRequest {
 	
 	void setAttribute(String name, Object obj);
 	
-	void setCharacterEncoding(String env);
+	void setCharacterEncoding(String env) throws UnsupportedEncodingException;
+
+	ServletContext getServletContext();
 }

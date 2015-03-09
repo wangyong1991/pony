@@ -1,11 +1,12 @@
 package pony.http;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 
 public interface ServletResponse {
-	void flushBuffer();
+	void flushBuffer() throws IOException;
 	
 	int getBufferSize();
 	
@@ -15,9 +16,9 @@ public interface ServletResponse {
 	
 	Locale getLocale();
 	
-	OutputStream getOutputStream();
+	OutputStream getOutputStream() throws IOException;
 	
-	PrintWriter getWriter();
+	PrintWriter getWriter() throws IOException;
 	
 	boolean isCommitted();
 	
