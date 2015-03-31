@@ -158,17 +158,17 @@ public class HttpServletRequestWrapper extends ServletRequestWrapper implements
 	 * The default behavior of this method is to return getSession(boolean
 	 * create) on the wrapped request object.
 	 */
-	public HttpSession getSession(boolean create) {
-		return this._getHttpServletRequest().getSession(create);
-	}
+//	public Session getSession(boolean create) {
+//		return this._getHttpServletRequest().getSession(create);
+//	}
 
 	/**
 	 * The default behavior of this method is to return getSession() on the
 	 * wrapped request object.
 	 */
-	public HttpSession getSession() {
-		return this._getHttpServletRequest().getSession();
-	}
+//	public Session getSession() {
+//		return this._getHttpServletRequest().getSession();
+//	}
 
 	/**
 	 * The default behavior of this method is to return

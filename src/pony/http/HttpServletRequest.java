@@ -35,9 +35,9 @@ public interface HttpServletRequest extends ServletRequest {
 	
 	String getServletPath();
 	
-	HttpSession getSession();
+//	Session getSession();
 	
-	HttpSession getSession(boolean create);
+//	Session getSession(boolean create);
 	
 	boolean isRequestedSessionIdFromCookie();
 	
