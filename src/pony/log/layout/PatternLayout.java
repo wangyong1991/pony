@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.util.Date;
 
 import pony.log.LogLevel;
-import pony.log.LogMessage;
+import pony.log.LogEvent;
 
 /**
  * 根据配置生成指定格式的日志信息
@@ -25,7 +25,7 @@ public class PatternLayout extends AbstractLayout {
 	}
 
 	@Override
-	public String toSerializable(final LogMessage _message) {
+	public String toSerializable(final LogEvent _message) {
 		final Date date = new Date();
 		final String loggerName = _message.getLoggerName();
 		final LogLevel level = _message.getLevel();

@@ -1,18 +1,18 @@
 package pony.net;
 
-import pony.IMessage;
+import pony.IEvent;
 import pony.IRequest;
 
 public class Request implements IRequest {
 	
-	private IMessage message;
+	private IEvent message;
 	
-	public Request(final IMessage _message){
+	public Request(final IEvent _message){
 		this.message = _message;
 	}
 
 	@Override
-	public IMessage getMessage() {
+	public IEvent getMessage() {
 		return this.message;
 	}
 

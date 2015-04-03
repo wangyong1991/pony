@@ -5,5 +5,5 @@ public interface IResponse {
 	
 	public int getErrorCode();
 	
-	public void setMessage(final IMessage _message);
+	public void setMessage(final IEvent _message);
 }

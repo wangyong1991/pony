@@ -1,25 +1,25 @@
 package pony.log;
 
-import pony.Message;
+import pony.AbstractEvent;
 /**
  * 日志消息
  * @author WangYong
  *
  * Date 2015年2月10日
  */
-public class LogMessage extends Message  {
+public class LogEvent extends AbstractEvent  {
 	private LogLevel level;
 	private String message;
 	private String loggerName;
 	private Throwable thrown;
 	
-	public LogMessage(final String _loggerName, final LogLevel _level, final String _message){
+	public LogEvent(final String _loggerName, final LogLevel _level, final String _message){
 		this.loggerName = _loggerName;
 		this.level = _level;
 		this.message = _message;
 	}
 	
-	public LogMessage(
+	public LogEvent(
 			final String _loggerName, 
 			final LogLevel _level, 
 			final String _message,

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pony.log.ILayout;
-import pony.log.LogMessage;
+import pony.log.LogEvent;
 import pony.util.Charsets;
 
 /**
@@ -113,7 +113,7 @@ public abstract class AbstractLayout implements ILayout {
      * @return The formatted event as a byte array.
      */
     @Override
-    public byte[] toByteArray(final LogMessage _message) {
+    public byte[] toByteArray(final LogEvent _message) {
         return toSerializable(_message).getBytes(charset);
     }
 }

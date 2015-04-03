@@ -28,6 +28,7 @@ public class HttpServletRequestImpl implements HttpServletRequest {
 	
 	public HttpServletRequestImpl(Socket socket) {
 		// TODO Auto-generated constructor stub
+		attributes = null;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import pony.log.LogConfig;
 import pony.log.LogLevel;
 import pony.net.ServerConfig;
 
-public class TestConfig {
+public class ConfigTest {
 
 	@Test
 	public void testGets(){

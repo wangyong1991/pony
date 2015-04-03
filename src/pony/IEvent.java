@@ -1,5 +1,5 @@
 package pony;
 
-public interface IMessage {
+public interface IEvent {
 	public Class<?> getID();
 }

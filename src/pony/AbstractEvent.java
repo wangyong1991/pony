@@ -1,6 +1,6 @@
 package pony;
 
-public class Message implements IMessage {
+public class AbstractEvent implements IEvent {
 
 	@Override
 	public Class<?> getID()

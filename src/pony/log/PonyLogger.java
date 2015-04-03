@@ -10,13 +10,13 @@ public class PonyLogger {
 	}
 
 	public void write(final String _logMsg, final LogLevel _level) {
-		final LogMessage logMessage = new LogMessage(loggerName, _level, _logMsg);
-		LogThread.getInstance().putMessage(logMessage);
+		final LogEvent logMessage = new LogEvent(loggerName, _level, _logMsg);
+		LogThread.getInstance().onEvent(logMessage);
 	}
 	
 	public void write(final String _logMsg, final LogLevel _level, final Throwable _thrown){
-		final LogMessage logMessage = new LogMessage(loggerName, _level, _logMsg, _thrown);
-		LogThread.getInstance().putMessage(logMessage);
+		final LogEvent logMessage = new LogEvent(loggerName, _level, _logMsg, _thrown);
+		LogThread.getInstance().onEvent(logMessage);
 	}
 
 	public String getName(){

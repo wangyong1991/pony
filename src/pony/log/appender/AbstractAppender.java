@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import pony.log.IAppender;
 import pony.log.ILayout;
-import pony.log.LogMessage;
+import pony.log.LogEvent;
 
 public abstract class AbstractAppender implements IAppender {
 
@@ -30,7 +30,7 @@ public abstract class AbstractAppender implements IAppender {
 	}
 
 	@Override
-	public void append(final LogMessage _message) {
+	public void append(final LogEvent _message) {
 		readLock.lock();
 		try {
 			final byte[] bytes = getLayout().toByteArray(_message);

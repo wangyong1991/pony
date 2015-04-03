@@ -1,19 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache license, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the license for the specific language governing permissions and
- * limitations under the license.
- */
 package pony.log.layout;
 
 import java.io.IOException;
@@ -27,16 +11,17 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import pony.log.LogLevel;
-import pony.log.LogMessage;
+import pony.log.LogEvent;
 import pony.util.Constants;
 import pony.util.Transform;
 
 /**
- * Outputs events as rows in an HTML table on an HTML page.
- * <p>
- * Appenders using this layout should have their encoding set to UTF-8 or UTF-16, otherwise events containing non ASCII
- * characters could result in corrupted log files.
- * </p>
+ * 以HTML表格格式输出日志文件
+ * <pre>
+ * </pre>
+ * @author WangYong
+ *
+ * @Date 2015年4月3日
  */
 public final class HtmlLayout extends AbstractLayout {
 
@@ -120,7 +105,7 @@ public final class HtmlLayout extends AbstractLayout {
      * @return A String containing the LogEvent as HTML.
      */
     @Override
-    public String toSerializable(final LogMessage _message) {
+    public String toSerializable(final LogEvent _message) {
         final StringBuilder sbuf = new StringBuilder(BUF_SIZE);
 
         sbuf.append(Constants.LINE_SEPARATOR).append("<tr>").append(Constants.LINE_SEPARATOR);

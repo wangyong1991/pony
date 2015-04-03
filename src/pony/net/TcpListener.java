@@ -11,6 +11,9 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import pony.IEvent;
+import pony.IListener;
 /**
  * TCP服务器<br>
  * 创建
@@ -18,15 +21,15 @@ import org.slf4j.LoggerFactory;
  *
  * @Date 2015年2月11日
  */
-public class TcpServer implements Runnable{
-	private static final Logger logger = LoggerFactory.getLogger(TcpServer.class);
+public class TcpListener implements IListener{
+	private static final Logger logger = LoggerFactory.getLogger(TcpListener.class);
 	private ServerSocketChannel serverChannel;
 	private final static int port = ServerConfig.getServerPort();
 	private final static boolean blocking = ServerConfig.getServerBlocking();
 	
 	private Selector selector ;
 	
-	public TcpServer(){
+	public TcpListener(){
 		try {
 			serverChannel = ServerSocketChannel.open();
 			serverChannel.socket().bind(new InetSocketAddress(port));
@@ -52,7 +55,8 @@ public class TcpServer implements Runnable{
 		}
 	}
 	
-	private void listen() throws IOException {
+	@Override
+	public void listen() throws IOException {
 		selector.select();
 		final Set<SelectionKey> selectionKeys = selector.selectedKeys();
 		final Iterator<SelectionKey> iterator = selectionKeys.iterator();
@@ -73,5 +77,11 @@ public class TcpServer implements Runnable{
 			client = (SocketChannel) _key.channel();
 			
 		}
+	}
+
+	@Override
+	public void onEvent(final IEvent _event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

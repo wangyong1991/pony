@@ -1,6 +1,6 @@
 package pony.db;
 
-import pony.MessageHolder;
+import pony.EventHolder;
 
 /**
  * 持久化线程
@@ -8,7 +8,7 @@ import pony.MessageHolder;
  *
  * Date 2015年2月10日
  */
-public class TransientThread extends MessageHolder<TransientMessage> implements Runnable{
+public class TransientThread extends EventHolder<TransientEvent> implements Runnable{
 
 	@Override
 	public void run() {

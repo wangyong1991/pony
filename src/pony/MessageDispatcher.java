@@ -4,19 +4,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import pony.exception.HandlerNotFoundException;
-import pony.net.ListenerMessage;
 
-public abstract class MessageDispatcher extends MessageHolder<ListenerMessage> implements IDispatcher{
+public abstract class MessageDispatcher<M extends IEvent> implements IDispatcher{
 	
-	private ConcurrentMap<Class<? extends IMessage>, IHandler> handlerMap;
+	private final ConcurrentMap<Class<? extends IEvent>, IHandler> handlerMap;
 	
-	public MessageDispatcher(){
+	private final EventHolder<M> messageHolder ;
+	
+	public MessageDispatcher(final int _capacity){
 		super();
-		handlerMap = new ConcurrentHashMap<Class<? extends IMessage>, IHandler>();
+		messageHolder = new EventHolder<M>(_capacity);
+		handlerMap = new ConcurrentHashMap<Class<? extends IEvent>, IHandler>();
 	}
 	
 	@Override
-	public void dispatch(final IMessage _message) {
+	public void dispatch(final IEvent _message) {
 		final IHandler handler = handlerMap.get(_message.getClass());
 		if(null == handler){
 			throw new HandlerNotFoundException("No handler be found for " + _message.getClass());
@@ -24,8 +26,8 @@ public abstract class MessageDispatcher extends MessageHolder<ListenerMessage> i
 	}
 
 	@Override
-	public void registerHandler(
-			final Class<? extends IMessage> clazz,
+	public void register(
+			final Class<? extends IEvent> clazz,
 			final IHandler _handler) {
 		handlerMap.putIfAbsent(clazz, _handler);
 	}

@@ -1,12 +1,12 @@
 package pony.net;
 
-import pony.IMessage;
+import pony.IEvent;
 import pony.IResponse;
 
 public class Response implements IResponse {
 	
 	private int errorCode;
-	private IMessage message;
+	private IEvent message;
 	
 	public Response(){
 		
@@ -16,11 +16,11 @@ public class Response implements IResponse {
 		this.errorCode = _errorCode;
 	}
 	
-	public Response(final IMessage _message){
+	public Response(final IEvent _message){
 		this.message = _message;
 	}
 	
-	public Response(final int _errorCode , final IMessage _message){
+	public Response(final int _errorCode , final IEvent _message){
 		this.errorCode = _errorCode;
 		this.message = _message;
 	}
@@ -36,7 +36,7 @@ public class Response implements IResponse {
 	}
 
 	@Override
-	public void setMessage(final IMessage _message) {
+	public void setMessage(final IEvent _message) {
 		this.message = _message;
 	}
 

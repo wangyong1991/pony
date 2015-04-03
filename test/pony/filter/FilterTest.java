@@ -9,7 +9,7 @@ import org.junit.Test;
 import pony.IFilter;
 import pony.net.ServerConfig;
 
-public class TestFilter {
+public class FilterTest {
 	private static String testStr = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 			+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 			+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
