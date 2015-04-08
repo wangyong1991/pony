@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author &#x738B;&#x52C7;
  * @version 1.0
  */
-public interface IListener extends Runnable {
+public interface IListener<E extends IEvent> extends Runnable {
 	/**
 	 * 监听
 	 * <pre>
@@ -19,5 +19,5 @@ public interface IListener extends Runnable {
 	 */
 	void listen()  throws IOException;
 	
-	void onEvent(IEvent _event);
+	void onEvent(E _event);
 }

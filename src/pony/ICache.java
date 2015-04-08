@@ -2,7 +2,12 @@ package pony;
 
 import java.util.Iterator;
 import java.util.Map;
-
+/**
+ * 缓存
+ * @author &#x738B;&#x52C7;
+ * @version 1.0
+ * @since 1.0
+ */
 public interface ICache<K,V> {
 	public String getName();
 	

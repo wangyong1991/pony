@@ -12,7 +12,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pony.IEvent;
 import pony.IListener;
 /**
  * TCP服务器<br>
@@ -21,7 +20,7 @@ import pony.IListener;
  *
  * @Date 2015年2月11日
  */
-public class TcpListener implements IListener{
+public class TcpListener implements IListener<TcpEvent>{
 	private static final Logger logger = LoggerFactory.getLogger(TcpListener.class);
 	private ServerSocketChannel serverChannel;
 	private final static int port = ServerConfig.getServerPort();
@@ -80,7 +79,7 @@ public class TcpListener implements IListener{
 	}
 
 	@Override
-	public void onEvent(final IEvent _event) {
+	public void onEvent(final TcpEvent _event) {
 		// TODO Auto-generated method stub
 		
 	}

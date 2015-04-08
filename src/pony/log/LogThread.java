@@ -14,7 +14,7 @@ import pony.log.layout.PatternLayout;
  * @Date 2015年2月10日
  */
 @ThreadSafe
-public class LogThread implements IListener{
+public class LogThread implements IListener<LogEvent>{
 	
 	private final static PatternLayout formater = new PatternLayout(LogConfig.getCharset());
 	
@@ -50,7 +50,7 @@ public class LogThread implements IListener{
 	}
 
 	@Override
-	public void onEvent(final IEvent _event) {
+	public void onEvent(final LogEvent _event) {
 		// TODO Auto-generated method stub
 		
 	}

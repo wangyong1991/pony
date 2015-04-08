@@ -1,6 +1,13 @@
 package pony.log;
 
-
+/**
+ * 日志系统
+ * <pre>
+ * 日志分级、记录
+ * </pre>
+ * @author &#x738B;&#x52C7;
+ * @version 1.0
+ */
 public class PonyLogger {
 	
 	private String loggerName;
