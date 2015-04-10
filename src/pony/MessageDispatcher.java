@@ -3,17 +3,18 @@ package pony;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import pony.IListener.EventHolder;
 import pony.exception.HandlerNotFoundException;
 
-public abstract class MessageDispatcher<M extends IEvent> implements IDispatcher{
+public abstract class MessageDispatcher<E extends IEvent> implements IDispatcher{
 	
 	private final ConcurrentMap<Class<? extends IEvent>, IHandler> handlerMap;
 	
-	private final EventHolder<M> messageHolder ;
+	private final EventHolder<E> messageHolder ;
 	
 	public MessageDispatcher(final int _capacity){
 		super();
-		messageHolder = new EventHolder<M>(_capacity);
+		messageHolder = new EventHolder<E>(_capacity);
 		handlerMap = new ConcurrentHashMap<Class<? extends IEvent>, IHandler>();
 	}
 	

@@ -2,8 +2,6 @@ package pony.log;
 
 import java.io.IOException;
 
-import pony.EventHolder;
-import pony.IEvent;
 import pony.IListener;
 import pony.annotation.ThreadSafe;
 import pony.log.layout.PatternLayout;
@@ -14,25 +12,25 @@ import pony.log.layout.PatternLayout;
  * @Date 2015年2月10日
  */
 @ThreadSafe
-public class LogThread implements IListener<LogEvent>{
+public class LogListener implements IListener<LogEvent>{
 	
 	private final static PatternLayout formater = new PatternLayout(LogConfig.getCharset());
 	
-	private final static LogThread INSTANCE = new LogThread();
+	private final static LogListener INSTANCE = new LogListener();
 	private final EventHolder<LogEvent> eventHolder;
 	
-	private LogThread(){
+	private LogListener(){
 		eventHolder = new EventHolder<LogEvent>();
 	}
 	
-	public static LogThread getInstance(){
+	public static LogListener getInstance(){
 		return INSTANCE;
 	}
 
 	@Override
 	public void run() {
 		while(true){
-			final LogEvent logMessage = eventHolder.pollMessage();
+			final LogEvent logMessage = eventHolder.poll();
 			final String message = formater.toSerializable(logMessage);
 			if(LogConfig.isEnableConsole()){
 				System.out.println(message);
