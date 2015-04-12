@@ -10,8 +10,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import pony.ICache;
-
 public class Cache<K, V> implements ICache<K, V> {
 	private final String name;
     private final HashMap<K, V> cache;

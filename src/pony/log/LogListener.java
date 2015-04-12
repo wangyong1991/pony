@@ -17,10 +17,10 @@ public class LogListener implements IListener<LogEvent>{
 	private final static PatternLayout formater = new PatternLayout(LogConfig.getCharset());
 	
 	private final static LogListener INSTANCE = new LogListener();
-	private final EventHolder<LogEvent> eventHolder;
+	private final EventQueue<LogEvent> eventHolder;
 	
 	private LogListener(){
-		eventHolder = new EventHolder<LogEvent>();
+		eventHolder = new EventQueue<LogEvent>();
 	}
 	
 	public static LogListener getInstance(){

@@ -22,14 +22,14 @@ public interface IDispatcher {
 	 * @param _clazz
 	 * @param _handler
 	 */
-	void register(Class<? extends IEvent> _clazz, IHandler _handler);
+	void register(Class<? extends IEvent> _eventClass, Class<? extends IHandler> _handlerClass);
 
 	/**
 	 * 消息分派
 	 * <p>
-	 * 将消息交予对应的Handler去处理
+	 * 将事件交予对应的Handler去处理
 	 * </p>
-	 * @param _message
+	 * @param _message	待处理的事件对象
 	 */
 	void dispatch(final IEvent _message);
 

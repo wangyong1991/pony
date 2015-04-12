@@ -1,4 +1,4 @@
-package pony;
+package pony.cache;
 
 import java.util.Iterator;
 import java.util.Map;

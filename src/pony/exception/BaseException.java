@@ -1,6 +1,11 @@
 package pony.exception;
-
-public class PonyException extends Exception {
+/**
+ * Pony中自定义异常的共同父类
+ * @author &#x738B;&#x52C7;
+ * @version 1.0
+ * @since 1.0
+ */
+public class BaseException extends RuntimeException {
 	/**
 	 * 
 	 */
@@ -12,11 +17,11 @@ public class PonyException extends Exception {
 	public final void setErrorCode(int _errorCode) {
 		this.errorCode = _errorCode;
 	}
-	public PonyException(final int _errorCode) {
+	public BaseException(final int _errorCode) {
 		super();
 		this.errorCode = _errorCode;
 	}
-	public PonyException(
+	public BaseException(
 			final String _message, 
 			final Throwable _cause,
 			final boolean _enableSuppression, 
@@ -25,20 +30,20 @@ public class PonyException extends Exception {
 		super(_message, _cause, _enableSuppression, _writableStackTrace);
 		this.errorCode = _errorCode;
 	}
-	public PonyException(
+	public BaseException(
 			final String _message, 
 			final Throwable _cause,
 			final int _errorCode) {
 		super(_message, _cause);
 		this.errorCode = _errorCode;
 	}
-	public PonyException(
+	public BaseException(
 			final String _message,
 			final int _errorCode) {
 		super(_message);
 		this.errorCode = _errorCode;
 	}
-	public PonyException(
+	public BaseException(
 			final Throwable _cause,
 			final int _errorCode) {
 		super(_cause);

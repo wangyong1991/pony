@@ -2,26 +2,36 @@ package pony;
 
 import java.io.IOException;
 
-public abstract class AbstractListener<E extends IEvent> implements IListener<E> {
-	
-	private EventHolder<E> eventHolder = new EventHolder<E>();
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+public abstract class AbstractListener<E extends IEvent> implements IListener<E> {
+	private static final Logger logger = LoggerFactory.getLogger(AbstractListener.class);
+	
+	private final EventQueue<E> eventQueue ;
+	
+	public AbstractListener(final int _capacity){
+		eventQueue = new EventQueue<E>(_capacity);
+	}
+	
+	public AbstractListener(){
+		eventQueue = new EventQueue<E>();
 	}
 
 	@Override
-	public void listen() throws IOException {
-		// TODO Auto-generated method stub
-		
+	public void run() {
+		try {
+			while(true){
+				listen();
+			}
+		} catch (IOException e) {
+			logger.error(e.getMessage() , e);
+		}
 	}
 
 	@Override
 	public void onEvent(E _event) {
-		// TODO Auto-generated method stub
-		
+		eventQueue.push(_event);
 	}
 
 }
