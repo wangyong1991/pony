@@ -25,6 +25,8 @@ public final class LogConfig {
 	public final static String LOG_ENABLE_FILE = "LOG_ENABLE_FILE";
 	public final static String LOG_CHARSET = "LOG_CHARSET";
 	
+	private final static String LOG_FILE_SUFFIX = ".log";
+	
 	public final static String DATE_ROLLING = "DATE";
 	public final static String SIZE_ROLLING = "SIZE";
 	
@@ -33,7 +35,7 @@ public final class LogConfig {
 
 	private static final LogLevel DEFAULT_LOG_LEVEL = LogLevel.DEBUG;
 
-	private static final String DEFAULT_LOG_FILE = "log";
+	private static final String DEFAULT_LOG_FILE = "LOG";
 
 	private static final int DEFAULT_LOG_FILE_SIZE = 2048;
 	
@@ -43,69 +45,90 @@ public final class LogConfig {
 	
 	private static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
 	
+	private static LogLevel logLevel = DEFAULT_LOG_LEVEL;
+	private static String filename = DEFAULT_LOG_FILE + LOG_FILE_SUFFIX;
+	private static int fileSize = DEFAULT_LOG_FILE_SIZE;
+	private static String pattern = DATE_ROLLING;
+	private static boolean enableConsole = DEFAULT_LOG_ENABLE_CONSOLE;
+	private static boolean enableFile = DEFAULT_LOG_ENABLE_FILE;
+	private static Charset charset = DEFAULT_CHARSET;
+	
 	static{
 		try {
 			InputStream in = new BufferedInputStream (new FileInputStream(FILE_PATH));
-      
 			props.load(in);
+			
+			// log level
+			final String logLevelStr = props.getProperty(LOG_LEVEL);
+			if(null != logLevelStr ){
+				logLevel = LogLevel.valueOf(logLevelStr);
+			}
+			
+			// log file name
+			final String fileName = props.getProperty(LOG_FILE_NAME);
+			if(null != fileName ){
+				filename = fileName + LOG_FILE_SUFFIX;
+			}
+			
+			// file size
+			final String sizeStr = props.getProperty(LOG_FILE_SIZE);
+			if(StringUtils.isNotEmpty(sizeStr) && StringUtils.isNumber(sizeStr) ){
+				fileSize = Integer.parseInt(sizeStr);
+			}
+			
+			// pattern
+			final String logPattern = props.getProperty(LOG_PATTERN);
+			if(null != logPattern ){
+				pattern = logPattern;
+			}
+			
+			// enable console
+			final String enableConsoleStr = props.getProperty(LOG_ENABLE_CONSOLE);
+			if(StringUtils.isNotEmpty(enableConsoleStr) && StringUtils.isBoolean(enableConsoleStr) ){
+				enableConsole = Boolean.valueOf(enableConsoleStr);
+			}
+			
+			// enable file
+			final String enableFileStr = props.getProperty(LOG_ENABLE_FILE);
+			if(StringUtils.isNotEmpty(enableFileStr) && StringUtils.isBoolean(enableFileStr) ){
+				enableFile = Boolean.valueOf(enableFileStr);
+			}
+			
+			// charset
+			final String charsetStr = props.getProperty(LOG_CHARSET);
+			if(StringUtils.isNotEmpty(charsetStr) && Charset.isSupported(charsetStr)){
+				charset = Charset.forName(charsetStr);
+			}
 		} catch (IOException e) {
 			logger.error("Load properties failed!", e);
 		}
 	}
-	
-	public static LogLevel getLogLevel(){
-		final String logLevel = props.getProperty(LOG_LEVEL);
-		if(null == logLevel ){
-			return DEFAULT_LOG_LEVEL;
-		}
-		return LogLevel.valueOf(logLevel);
+
+	public static final LogLevel getLogLevel() {
+		return logLevel;
 	}
-	
-	public static String getLogFileName(){
-		final String fileName = props.getProperty(LOG_FILE_NAME);
-		if(null == fileName ){
-			return DEFAULT_LOG_FILE;
-		}
-		return fileName;
+
+	public static final String getFilename() {
+		return filename;
 	}
-	
-	public static int getFileSize(){
-		final String sizeStr = props.getProperty(LOG_FILE_SIZE);
-		if(StringUtils.isEmpty(sizeStr) || ! StringUtils.isNumber(sizeStr) ){
-			return DEFAULT_LOG_FILE_SIZE;
-		}
-		return Integer.parseInt(sizeStr);
+
+	public static final int getFileSize() {
+		return fileSize;
 	}
-	
-	public static String getPattern(){
-		final String logPattern = props.getProperty(LOG_PATTERN);
-		if(null == logPattern ){
-			return DATE_ROLLING;
-		}
-		return logPattern;
+
+	public static final String getPattern() {
+		return pattern;
 	}
-	
-	public static boolean isEnableConsole(){
-		final String str = props.getProperty(LOG_ENABLE_CONSOLE);
-		if(StringUtils.isEmpty(str) || ! StringUtils.isBoolean(str) ){
-			return DEFAULT_LOG_ENABLE_CONSOLE;
-		}
-		return Boolean.valueOf(str);
+
+	public static final boolean isEnableConsole() {
+		return enableConsole;
 	}
-	
-	public static boolean isEnableFile(){
-		final String str = props.getProperty(LOG_ENABLE_FILE);
-		if(StringUtils.isEmpty(str) || ! StringUtils.isBoolean(str) ){
-			return DEFAULT_LOG_ENABLE_FILE;
-		}
-		return Boolean.valueOf(str);
+
+	public static final boolean isEnableFile() {
+		return enableFile;
 	}
-	
-	public static Charset getCharset(){
-		final String str = props.getProperty(LOG_CHARSET);
-		if(StringUtils.isEmpty(str) || ! Charset.isSupported(str)){
-			return DEFAULT_CHARSET;
-		}
-		return Charset.forName(str);
+
+	public static final Charset getCharset() {
+		return charset;
 	}
 }

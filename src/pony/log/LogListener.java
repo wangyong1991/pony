@@ -2,17 +2,22 @@ package pony.log;
 
 import java.io.IOException;
 
-import pony.IListener;
-import pony.annotation.ThreadSafe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pony.AbstractListener;
 import pony.log.layout.PatternLayout;
 /**
- * 日志记录线程
- * @author WangYong
- *
- * @Date 2015年2月10日
+ * 日志事件监听器
+ * <pre>
+ * 循环监听日志事件，并记录日志
+ * </pre>
+ * @author &#x738B;&#x52C7;
+ * @version 1.0
+ * @since 1.0
  */
-@ThreadSafe
-public class LogListener implements IListener<LogEvent>{
+public class LogListener extends AbstractListener<LogEvent>{
+	private static final Logger logger = LoggerFactory.getLogger(LogListener.class);
 	
 	private final static PatternLayout formater = new PatternLayout(LogConfig.getCharset());
 	
@@ -28,29 +33,18 @@ public class LogListener implements IListener<LogEvent>{
 	}
 
 	@Override
-	public void run() {
-		while(true){
-			final LogEvent logMessage = eventHolder.poll();
-			final String message = formater.toSerializable(logMessage);
-			if(LogConfig.isEnableConsole()){
-				System.out.println(message);
-			}
-			if(LogConfig.isEnableFile()){
-				
-			}
-		}
-	}
-
-	@Override
 	public void listen() throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onEvent(final LogEvent _event) {
-		// TODO Auto-generated method stub
-		
+		final LogEvent l_logEvent = eventHolder.poll();
+		if(l_logEvent == null){
+			return;
+		}
+		final String message = formater.toSerializable(l_logEvent);
+		if(LogConfig.isEnableConsole()){
+			System.out.println(message);
+		}
+		if(LogConfig.isEnableFile()){
+			
+		}
 	}
 
 }

@@ -24,7 +24,7 @@ public class TcpServer implements Runnable{
 	private static final Logger logger = LoggerFactory.getLogger(TcpServer.class);
 	private ServerSocketChannel serverChannel;
 	private final static int port = ServerConfig.getServerPort();
-	private final static boolean blocking = ServerConfig.getServerBlocking();
+	private final static boolean blocking = ServerConfig.isBlocking();
 	
 	private Selector selector ;
 	

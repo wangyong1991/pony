@@ -24,47 +24,67 @@ public final class ServerConfig {
 	private final static Properties props = new Properties();
 	private final static String FILE_PATH = "pony.properties";
 	
+	private final static String DEAULT_SERVER_NAME = "Pony";
+	
 	private final static int DEFAULT_SERVER_PORT = 7777;
 	
 	private final static boolean DEFAULT_SERVER_BLOCKING = false;
 
 	private static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
 	
+	
+	private static String serverName = DEAULT_SERVER_NAME;
+	private static int serverPort = DEFAULT_SERVER_PORT;
+	private static boolean blocking = DEFAULT_SERVER_BLOCKING;
+	private static Charset charset = DEFAULT_CHARSET;
+	
+	
 	static{
 		try {
 			InputStream in = new BufferedInputStream (new FileInputStream(FILE_PATH));
-      
 			props.load(in);
+			// server name
+			final String nameStr = props.getProperty(SERVER_NAME);
+			if(nameStr != null){
+				serverName = nameStr;
+			}
+			
+			// server port
+			final String portStr = props.getProperty(SERVER_PORT);
+			if(StringUtils.isNotEmpty(portStr) && StringUtils.isNumber(portStr) ){
+				serverPort = Integer.parseInt(portStr);
+			}
+			
+			// blocking
+			final String blockingStr = props.getProperty(SERVER_BLOCKING);
+			if(StringUtils.isNotEmpty(blockingStr) && StringUtils.isBoolean(blockingStr) ){
+				blocking =  Boolean.valueOf(blockingStr);
+			}
+			
+			// charset
+			final String str = props.getProperty(CHARSET);
+			if(StringUtils.isNotEmpty(str) && Charset.isSupported(str)){
+				charset = Charset.forName(str);
+			}
 		} catch (IOException e) {
 			logger.error("Load properties failed!", e);
 		}
 	}
 	
-	public static String getServerName(){
-		return props.getProperty(SERVER_NAME);
+	public static final String getServerName() {
+		return serverName;
 	}
-	
-	public static int getServerPort(){
-		final String portStr = props.getProperty(SERVER_PORT);
-		if(StringUtils.isEmpty(portStr) || ! StringUtils.isNumber(portStr) ){
-			return DEFAULT_SERVER_PORT;
-		}
-		return Integer.parseInt(portStr);
+
+	public static final int getServerPort() {
+		return serverPort;
 	}
-	
-	public static boolean getServerBlocking(){
-		final String str = props.getProperty(SERVER_BLOCKING);
-		if(StringUtils.isEmpty(str) || ! StringUtils.isBoolean(str) ){
-			return DEFAULT_SERVER_BLOCKING;
-		}
-		return Boolean.valueOf(str);
+
+	public static final boolean isBlocking() {
+		return blocking;
 	}
-	
-	public static Charset getCharset(){
-		final String str = props.getProperty(CHARSET);
-		if(StringUtils.isEmpty(str) || ! Charset.isSupported(str)){
-			return DEFAULT_CHARSET;
-		}
-		return Charset.forName(str);
+
+	public static final Charset getCharset() {
+		return charset;
 	}
+
 }

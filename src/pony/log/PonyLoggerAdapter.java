@@ -1,15 +1,9 @@
 package pony.log;
 
-import java.util.Collections;
-import java.util.IdentityHashMap;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
-
-import pony.net.ServerConfig;
 
 public class PonyLoggerAdapter implements Logger {
 

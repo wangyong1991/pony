@@ -25,12 +25,12 @@ public class PatternLayout extends AbstractLayout {
 	}
 
 	@Override
-	public String toSerializable(final LogEvent _message) {
+	public String toSerializable(final LogEvent _event) {
 		final Date date = new Date();
-		final String loggerName = _message.getLoggerName();
-		final LogLevel level = _message.getLevel();
-		final String message = _message.getMessage();
-		final Throwable t = _message.getThrown();
+		final String loggerName = _event.getLoggerName();
+		final LogLevel level = _event.getLevel();
+		final String message = _event.getMessage();
+		final Throwable t = _event.getThrown();
 		final StringBuilder sb = new StringBuilder();
 		sb.append(String.format("%1$tF %1$tT:%1$tL [%2$s] %3$s %4$s\r\n", date, level, loggerName, message));
 		if(null != t){

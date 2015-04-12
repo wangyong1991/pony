@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
+import pony.ErrorCode;
 import pony.exception.ServletException;
 
 /**
@@ -681,7 +682,7 @@ public abstract class HttpServlet extends GenericServlet {
 		HttpServletResponse response;
 
 		if (!(req instanceof HttpServletRequest && res instanceof HttpServletResponse)) {
-			throw new ServletException("non-HTTP request or response");
+			throw new ServletException("non-HTTP request or response", ErrorCode.NON_HTTP_REQUEST_OR_RESPONSE);
 		}
 
 		request = (HttpServletRequest) req;

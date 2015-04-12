@@ -12,6 +12,10 @@ public final class StringUtils {
 		return false;
 	}
 	
+	public static boolean isNotEmpty(final String str){
+		return ! isEmpty(str);
+	}
+	
 	public static boolean isNumber(final String str){
 		Args.notNull(str, "str");
 		return str.matches("[0-9]{1,}");

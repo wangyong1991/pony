@@ -1,30 +1,18 @@
 package pony.exception;
 
-public class ServletException extends Exception {
+public class ServletException extends BaseException {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7151379566314715096L;
-	private Throwable rootCause;
-
-	public ServletException() {
+	
+	public ServletException(final int _errorCode) {
+		super(_errorCode);
 	}
 
-	public ServletException(String message) {
-		super(message);
-	}
-
-	public ServletException(String message, Throwable rootCause) {
-		super(message, rootCause);
-		this.rootCause = rootCause;
-	}
-
-	public ServletException(Throwable rootCause) {
-		super(rootCause);
-		this.rootCause = rootCause;
-	}
-
-	public Throwable getRootCause() {
-		return this.rootCause;
+	public ServletException(
+			final String _message,
+			final int _errorCode) {
+		super(_message, _errorCode);
 	}
 }

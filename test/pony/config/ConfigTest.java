@@ -15,7 +15,7 @@ public class ConfigTest {
 		assertEquals("pony", ServerConfig.getServerName());
 		assertEquals(7777, ServerConfig.getServerPort());
 		assertEquals(LogLevel.DEBUG, LogConfig.getLogLevel());
-		assertEquals("LOG.log", LogConfig.getLogFileName());
+		assertEquals("LOG.log", LogConfig.getFilename());
 		assertEquals(2048, LogConfig.getFileSize());
 		assertEquals("DATE", LogConfig.getPattern());
 		assertEquals(true, LogConfig.isEnableConsole());

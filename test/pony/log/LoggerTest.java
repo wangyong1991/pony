@@ -6,8 +6,25 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoggerTest {
-	private static final Logger logger = LoggerFactory.getLogger("TestLogger");
+import pony.BaseTest;
+
+public class LoggerTest extends BaseTest {
+	private static final Logger logger = LoggerFactory.getLogger(LoggerTest.class);
+	private LogListener logListener ;
+	Thread thread ;
+	
+	@Test
+	public void setUp() {
+		logListener = LogListener.getInstance();
+		thread = new Thread(logListener);
+		thread.start();
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Test
 	public void test() {
@@ -15,8 +32,14 @@ public class LoggerTest {
 	}
 	
 	@Test
-	public void testError(){
+	public void testError() {
 		logger.error("test error");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		thread.stop();
 	}
-
 }
