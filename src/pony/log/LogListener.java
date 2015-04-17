@@ -17,15 +17,13 @@ import pony.log.layout.PatternLayout;
  * @since 1.0
  */
 public class LogListener extends AbstractListener<LogEvent>{
-	private static final Logger logger = LoggerFactory.getLogger(LogListener.class);
 	
 	private final static PatternLayout formater = new PatternLayout(LogConfig.getCharset());
 	
 	private final static LogListener INSTANCE = new LogListener();
-	private final EventQueue<LogEvent> eventHolder;
 	
 	private LogListener(){
-		eventHolder = new EventQueue<LogEvent>();
+		super();
 	}
 	
 	public static LogListener getInstance(){
@@ -33,11 +31,8 @@ public class LogListener extends AbstractListener<LogEvent>{
 	}
 
 	@Override
-	public void listen() throws IOException {
-		final LogEvent l_logEvent = eventHolder.poll();
-		if(l_logEvent == null){
-			return;
-		}
+	public void listen() throws IOException, InterruptedException {
+		final LogEvent l_logEvent = eventQueue.poll();
 		final String message = formater.toSerializable(l_logEvent);
 		if(LogConfig.isEnableConsole()){
 			System.out.println(message);

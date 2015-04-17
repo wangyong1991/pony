@@ -20,8 +20,9 @@ public interface IListener<E extends IEvent> extends Runnable {
 	 * 定义监听的具体内容和具体方式
 	 * </pre>
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	void listen()  throws IOException;
+	void listen()  throws IOException, InterruptedException;
 	
 	void onEvent(E _event);
 	
@@ -39,7 +40,7 @@ public interface IListener<E extends IEvent> extends Runnable {
 	 */
 	@ThreadSafe
 	public class EventQueue<E extends IEvent> {
-		private static final int DEFAULT_CAPACITY = 1 << 8;
+		private static final int DEFAULT_CAPACITY = 1 << 10;
 		/** 事件队列 */
 		private final BlockingQueue<E> eventQueue ; 
 
@@ -67,17 +68,19 @@ public interface IListener<E extends IEvent> extends Runnable {
 		/**
 		 * 将事件放入事件队列中
 		 * @param _event
+		 * @throws InterruptedException 
 		 */
-		public void push(final E _event) {
-			this.eventQueue.add(_event);
+		public void push(final E _event) throws InterruptedException {
+			this.eventQueue.put(_event);
 		}
 		
 		/**
 		 * 取出事件队列中最前面的事件对象
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public E poll(){
-			return this.eventQueue.poll();
+		public E poll() throws InterruptedException{
+			return this.eventQueue.take();
 		}
 		
 		/**

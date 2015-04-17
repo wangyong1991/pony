@@ -2,13 +2,9 @@ package pony;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public abstract class AbstractListener<E extends IEvent> implements IListener<E> {
-	private static final Logger logger = LoggerFactory.getLogger(AbstractListener.class);
 	
-	private final EventQueue<E> eventQueue ;
+	protected final EventQueue<E> eventQueue ;
 	
 	public AbstractListener(final int _capacity){
 		eventQueue = new EventQueue<E>(_capacity);
@@ -25,13 +21,19 @@ public abstract class AbstractListener<E extends IEvent> implements IListener<E>
 				listen();
 			}
 		} catch (IOException e) {
-			logger.error(e.getMessage() , e);
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void onEvent(E _event) {
-		eventQueue.push(_event);
+		try {
+			eventQueue.push(_event);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
