@@ -18,12 +18,7 @@ public class LoggerTest extends BaseTest {
 		logListener = LogListener.getInstance();
 		thread = new Thread(logListener);
 		thread.start();
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	@Test
@@ -35,7 +30,7 @@ public class LoggerTest extends BaseTest {
 	public void testError() {
 		logger.error("test error");
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
