@@ -71,6 +71,7 @@ public interface IListener<E extends IEvent> extends Runnable {
 		 * @throws InterruptedException 
 		 */
 		public void push(final E _event) throws InterruptedException {
+			System.out.println("EventQueue.push()");
 			this.eventQueue.put(_event);
 		}
 		
@@ -80,6 +81,7 @@ public interface IListener<E extends IEvent> extends Runnable {
 		 * @throws InterruptedException 
 		 */
 		public E poll() throws InterruptedException{
+			System.out.println("EventQueue.poll()");
 			return this.eventQueue.take();
 		}
 		

@@ -37,7 +37,7 @@ public final class HtmlLayout extends AbstractLayout {
 
     public static final String DEFAULT_FONT_FAMILY = "arial,sans-serif";
 
-    private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
+//    private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
 
     private final String title;
 
@@ -75,6 +75,19 @@ public final class HtmlLayout extends AbstractLayout {
     private final String font;
     private final String fontSize;
     private final String headerSize;
+    
+    /**
+     * 该方法仅用于测试
+     * @deprecated
+     */
+    public HtmlLayout(){
+    	super(Charset.forName("GBK"));
+    	this.title = DEFAULT_TITLE;
+    	this.contentType = DEFAULT_CONTENT_TYPE;
+    	this.font = DEFAULT_FONT_FAMILY;
+    	this.headerSize = FontSize.XLARGE.getFontSize();
+    	this.fontSize = FontSize.MEDIUM.getFontSize();
+    }
 
     private HtmlLayout(
     		final String title, 
@@ -101,30 +114,30 @@ public final class HtmlLayout extends AbstractLayout {
     /**
      * Format as a String.
      *
-     * @param _message The Logging Event.
+     * @param _event The Logging Event.
      * @return A String containing the LogEvent as HTML.
      */
     @Override
-    public String toSerializable(final LogEvent _message) {
+    public String toSerializable(final LogEvent _event) {
         final StringBuilder sbuf = new StringBuilder(BUF_SIZE);
 
         sbuf.append(Constants.LINE_SEPARATOR).append("<tr>").append(Constants.LINE_SEPARATOR);
 
         sbuf.append("<td title=\"Level\">");
-        if (_message.getLevel().equals(LogLevel.DEBUG)) {
+        if (_event.getLevel().equals(LogLevel.DEBUG)) {
             sbuf.append("<font color=\"#339933\">");
-            sbuf.append(Transform.escapeHtmlTags(String.valueOf(_message.getLevel())));
+            sbuf.append(Transform.escapeHtmlTags(String.valueOf(_event.getLevel())));
             sbuf.append("</font>");
-        } else if (_message.getLevel().getValue() >= LogLevel.WARN.getValue()) {
+        } else if (_event.getLevel().getValue() >= LogLevel.WARN.getValue()) {
             sbuf.append("<font color=\"#993300\"><strong>");
-            sbuf.append(Transform.escapeHtmlTags(String.valueOf(_message.getLevel())));
+            sbuf.append(Transform.escapeHtmlTags(String.valueOf(_event.getLevel())));
             sbuf.append("</strong></font>");
         } else {
-            sbuf.append(Transform.escapeHtmlTags(String.valueOf(_message.getLevel())));
+            sbuf.append(Transform.escapeHtmlTags(String.valueOf(_event.getLevel())));
         }
         sbuf.append("</td>").append(Constants.LINE_SEPARATOR);
 
-        String escapedLogger = Transform.escapeHtmlTags(_message.getLoggerName());
+        String escapedLogger = Transform.escapeHtmlTags(_event.getLoggerName());
         if (escapedLogger.isEmpty()) {
             escapedLogger = "root";
         }
@@ -133,11 +146,11 @@ public final class HtmlLayout extends AbstractLayout {
         sbuf.append("</td>").append(Constants.LINE_SEPARATOR);
 
         sbuf.append("<td title=\"Message\">");
-        sbuf.append(Transform.escapeHtmlTags(_message.getMessage()).replaceAll(REGEXP, "<br />"));
+        sbuf.append(Transform.escapeHtmlTags(_event.getMessage()).replaceAll(REGEXP, "<br />"));
         sbuf.append("</td>").append(Constants.LINE_SEPARATOR);
         sbuf.append("</tr>").append(Constants.LINE_SEPARATOR);
 
-        final Throwable throwable = _message.getThrown();
+        final Throwable throwable = _event.getThrown();
         if (throwable != null) {
             sbuf.append("<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\">");

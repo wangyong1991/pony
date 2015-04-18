@@ -33,7 +33,7 @@ public class PatternLayout extends AbstractLayout {
 		final Throwable t = _event.getThrown();
 		final StringBuilder sb = new StringBuilder();
 		sb.append(String.format("%1$tF %1$tT:%1$tL [%2$s] %3$s %4$s\r\n", date, level, loggerName, message));
-		if(null != t){
+		if(t != null){
 			formatOption(t, sb);
 		}
 		return sb.toString();

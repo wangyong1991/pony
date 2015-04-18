@@ -28,7 +28,7 @@ public interface ILayout {
      * @param event The Logging Event.
      * @return The formatted event.
      */
-    String toSerializable(final LogEvent _message);
+    String toSerializable(final LogEvent _event);
 
     /**
      * Returns the content type output by this layout. The base class returns "text/plain".

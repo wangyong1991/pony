@@ -2,9 +2,6 @@ package pony.log;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import pony.AbstractListener;
 import pony.log.layout.PatternLayout;
 /**
@@ -35,7 +32,7 @@ public class LogListener extends AbstractListener<LogEvent>{
 		final LogEvent l_logEvent = eventQueue.poll();
 		final String message = formater.toSerializable(l_logEvent);
 		if(LogConfig.isEnableConsole()){
-			System.out.println(message);
+			System.err.println(message);
 		}
 		if(LogConfig.isEnableFile()){
 			

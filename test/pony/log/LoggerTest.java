@@ -1,5 +1,7 @@
 package pony.log;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,28 +13,31 @@ public class LoggerTest extends BaseTest {
 	private LogListener logListener ;
 	private volatile boolean running = true;
 	
-	@Test
-	public void testError() {
+	@Before
+	public void setUp(){
 		logListener = LogListener.getInstance();
 		Thread thread = new Thread(logListener);
 		thread.start();
-		
-		final Thread client = new Thread(){
-			public void run() {
-				while(running){
-					logger.error("test error!");
-				}
-			};
-		};
-		
-		client.start();
+	}
+	
+	@Test
+	public void testError() {
+		logger.error("test error!");
+	}
+	
+	@After
+	public void finalize() throws Throwable {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			running = false;
-			thread.stop();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	};
+	
+	
+	@Test
+	public void testOutputException(){
+		logger.debug("test exception", new NullPointerException());
 	}
 }

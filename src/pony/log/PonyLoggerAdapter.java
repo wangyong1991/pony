@@ -4,7 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
-
+/**
+ * 日志适配
+ * @author &#x738B;&#x52C7;
+ * @version 1.0
+ * @since 1.0
+ */
 public class PonyLoggerAdapter implements Logger {
 
 	private PonyLogger logger ;
@@ -153,30 +158,30 @@ public class PonyLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public void info(String _logMsg) {
+	public void info(final String _logMsg) {
 		if (isInfoEnabled()) {
 			logger.write(_logMsg, LogLevel.INFO);
 		}
 	}
 
 	@Override
-	public void info(String format, Object arg1) {
+	public void info(final String _format, final Object arg1) {
 		if(isInfoEnabled()){
-			FormattingTuple ft = MessageFormatter.format(format, arg1);
+			FormattingTuple ft = MessageFormatter.format(_format, arg1);
 			logger.write(ft.getMessage(), LogLevel.INFO);
 		}
 	}
 
 	@Override
-	public void info(String format, Object... argsArray) {
+	public void info(final String _format, final Object... _argsArray) {
 		if(isInfoEnabled()){
-			FormattingTuple ft = MessageFormatter.arrayFormat(format, argsArray);
+			FormattingTuple ft = MessageFormatter.arrayFormat(_format, _argsArray);
 			logger.write(ft.getMessage(), LogLevel.INFO);
 		}
 	}
 
 	@Override
-	public void info(String _logMsg, Throwable _thrown) {
+	public void info(final String _logMsg, final Throwable _thrown) {
 		if(isInfoEnabled()){
 			logger.write(_logMsg, LogLevel.INFO, _thrown);
 		}
@@ -189,9 +194,9 @@ public class PonyLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public void info(String format, Object arg1, Object arg2) {
+	public void info(final String _format, final Object arg1, final Object arg2) {
 		if(isInfoEnabled()){
-			FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+			FormattingTuple ft = MessageFormatter.format(_format, arg1, arg2);
 			logger.write(ft.getMessage(), LogLevel.INFO);
 		}
 	}

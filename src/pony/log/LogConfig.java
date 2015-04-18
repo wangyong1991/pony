@@ -10,7 +10,6 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pony.log.LogLevel;
 import pony.util.Charsets;
 import pony.util.StringUtils;
 
