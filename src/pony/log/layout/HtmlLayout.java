@@ -6,26 +6,17 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.lang.management.ManagementFactory;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-import pony.log.LogLevel;
+import pony.log.ILayout;
 import pony.log.LogEvent;
+import pony.log.LogLevel;
 import pony.util.Constants;
 import pony.util.Transform;
 
-/**
- * 以HTML表格格式输出日志文件
- * <pre>
- * </pre>
- * @author WangYong
- *
- * @Date 2015年4月3日
- */
-public final class HtmlLayout extends AbstractLayout {
-
-    private static final int BUF_SIZE = 256;
+public class HtmlLayout extends AbstractLayout {
+	 private static final int BUF_SIZE = 256;
 
     private static final String TRACE_PREFIX = "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
 
@@ -37,12 +28,14 @@ public final class HtmlLayout extends AbstractLayout {
 
     public static final String DEFAULT_FONT_FAMILY = "arial,sans-serif";
 
-//    private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
+//	    private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
+    
+    public static final ILayout DEFAULT_HTML_LAYOUT = new HtmlLayout();
 
     private final String title;
 
     private final String contentType;
-
+    
     /**Possible font sizes */
     public static enum FontSize {
         SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
@@ -76,10 +69,6 @@ public final class HtmlLayout extends AbstractLayout {
     private final String fontSize;
     private final String headerSize;
     
-    /**
-     * 该方法仅用于测试
-     * @deprecated
-     */
     public HtmlLayout(){
     	super(Charset.forName("GBK"));
     	this.title = DEFAULT_TITLE;
@@ -89,7 +78,7 @@ public final class HtmlLayout extends AbstractLayout {
     	this.fontSize = FontSize.MEDIUM.getFontSize();
     }
 
-    private HtmlLayout(
+    public HtmlLayout(
     		final String title, 
     		final String contentType, 
     		final Charset charset,
@@ -103,7 +92,7 @@ public final class HtmlLayout extends AbstractLayout {
         this.fontSize = fontSize;
         this.headerSize = headerSize;
     }
-
+    
     private String addCharsetToContentType(final String contentType) {
         if (contentType == null) {
             return DEFAULT_CONTENT_TYPE + "; charset=" + getCharset();
@@ -111,15 +100,10 @@ public final class HtmlLayout extends AbstractLayout {
         return contentType.contains("charset") ? contentType : contentType + "; charset=" + getCharset();
     }
 
-    /**
-     * Format as a String.
-     *
-     * @param _event The Logging Event.
-     * @return A String containing the LogEvent as HTML.
-     */
-    @Override
-    public String toSerializable(final LogEvent _event) {
-        final StringBuilder sbuf = new StringBuilder(BUF_SIZE);
+
+	@Override
+	public String format(final LogEvent _event) {
+		final StringBuilder sbuf = new StringBuilder(BUF_SIZE);
 
         sbuf.append(Constants.LINE_SEPARATOR).append("<tr>").append(Constants.LINE_SEPARATOR);
 
@@ -154,26 +138,19 @@ public final class HtmlLayout extends AbstractLayout {
         if (throwable != null) {
             sbuf.append("<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\">");
-            appendThrowableAsHtml(throwable, sbuf);
+            formatThrowable(throwable, sbuf);
             sbuf.append("</td></tr>").append(Constants.LINE_SEPARATOR);
         }
 
         return sbuf.toString();
-    }
+	}
 
-    @Override
-    /**
-     * @return The content type.
-     */
-    public String getContentType() {
-        return contentType;
-    }
-
-    private void appendThrowableAsHtml(final Throwable throwable, final StringBuilder sbuf) {
-        final StringWriter sw = new StringWriter();
+	@Override
+	public void formatThrowable(final Throwable _thrown, final StringBuilder sbuf) {
+		final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);
         try {
-            throwable.printStackTrace(pw);
+        	_thrown.printStackTrace(pw);
         } catch (final RuntimeException ex) {
             // Ignore the exception.
         }
@@ -202,15 +179,11 @@ public final class HtmlLayout extends AbstractLayout {
             sbuf.append(Transform.escapeHtmlTags(line));
             sbuf.append(Constants.LINE_SEPARATOR);
         }
-    }
-
-    /**
-     * Returns appropriate HTML headers.
-     * @return The header as a byte array.
-     */
-    @Override
-    public byte[] getHeader() {
-        final StringBuilder sbuf = new StringBuilder();
+	}
+	
+	@Override
+	public byte[] getHeader() {
+		final StringBuilder sbuf = new StringBuilder();
         sbuf.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" ");
         sbuf.append("\"http://www.w3.org/TR/html4/loose.dtd\">");
         sbuf.append(Constants.LINE_SEPARATOR);
@@ -242,19 +215,15 @@ public final class HtmlLayout extends AbstractLayout {
         sbuf.append("<th>Message</th>").append(Constants.LINE_SEPARATOR);
         sbuf.append("</tr>").append(Constants.LINE_SEPARATOR);
         return sbuf.toString().getBytes(getCharset());
-    }
-
-    /**
-     * Returns the appropriate HTML footers.
-     * @return the footer as a byet array.
-     */
-    @Override
-    public byte[] getFooter() {
-        final StringBuilder sbuf = new StringBuilder();
+	}
+	
+	@Override
+	public byte[] getFooter() {
+		final StringBuilder sbuf = new StringBuilder();
         sbuf.append("</table>").append(Constants.LINE_SEPARATOR);
         sbuf.append("<br>").append(Constants.LINE_SEPARATOR);
         sbuf.append("</body></html>");
         return sbuf.toString().getBytes(getCharset());
-    }
+	}
 
 }

@@ -16,20 +16,20 @@ public class HtmlLayoutTest {
 	}
 
 	@Test
-	public void testToSerializable(){
+	public void testToByteArray(){
 		final ILayout htmlLayout = new HtmlLayout();
-		final LogEvent event = new LogEvent(HtmlLayoutTest.class.getName(), LogLevel.DEBUG, "testToSerializable");
-		final String output = htmlLayout.toSerializable(event);
-		System.out.println(output);
+		final LogEvent event = new LogEvent(HtmlLayoutTest.class.getName(), LogLevel.DEBUG, "testToByteArray");
+		final byte[] output = htmlLayout.toByteArray(event);
+		System.out.println(new String(output));
 	}
 	
 	@Test
-	public void testToSerializableWithThrown(){
+	public void testToByteArrayWithThrown(){
 		final ILayout htmlLayout = new HtmlLayout();
-		final LogEvent event = new LogEvent(HtmlLayoutTest.class.getName(), LogLevel.DEBUG, "testToSerializable", new NullPointerException());
-		final String output = htmlLayout.toSerializable(event);
+		final LogEvent event = new LogEvent(HtmlLayoutTest.class.getName(), LogLevel.DEBUG, "testToByteArray", new NullPointerException());
+		final byte[] output = htmlLayout.toByteArray(event);
 		System.out.println(new String(htmlLayout.getHeader()));
-		System.out.println(output);
+		System.out.println(new String(output));
 		System.out.println(new String(htmlLayout.getFooter()));
 	}
 }

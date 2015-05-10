@@ -1,6 +1,7 @@
 package pony.log;
 
 import java.io.IOException;
+import java.util.List;
 
 import pony.AbstractListener;
 import pony.log.layout.PatternLayout;
@@ -15,9 +16,11 @@ import pony.log.layout.PatternLayout;
  */
 public class LogListener extends AbstractListener<LogEvent>{
 	
-	private final static PatternLayout formater = new PatternLayout(LogConfig.getCharset());
+	private final static PatternLayout layout = new PatternLayout(LogConfig.getCharset());
 	
 	private final static LogListener INSTANCE = new LogListener();
+	
+	private final LogConfig config = new LogConfig();
 	
 	private LogListener(){
 		super();
@@ -30,12 +33,10 @@ public class LogListener extends AbstractListener<LogEvent>{
 	@Override
 	public void listen() throws IOException, InterruptedException {
 		final LogEvent l_logEvent = eventQueue.poll();
-		final String message = formater.toSerializable(l_logEvent);
-		if(LogConfig.isEnableConsole()){
-			System.err.println(message);
-		}
-		if(LogConfig.isEnableFile()){
-			
+		final List<IAppender> l_appenders = config.getAppenders();
+		
+		for (final IAppender appender : l_appenders) {
+			appender.append(l_logEvent);
 		}
 	}
 

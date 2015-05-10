@@ -1,47 +1,25 @@
 package pony.log;
 
-import java.util.Map;
+import java.nio.charset.Charset;
 
+/**
+ * 日志布局
+ * @author &#x738B;&#x52C7;
+ * @version 1.0
+ * @since 1.0
+ */
 public interface ILayout {
-
-    String ELEMENT_TYPE = "layout";
-
-    /**
-     * Returns the format for the layout format.
-     * @return The footer.
-     */
-    byte[] getFooter();
-
-    /**
-     * Returns the header for the layout format.
-     * @return The header.
-     */
-    byte[] getHeader();
-
-    byte[] toByteArray(final LogEvent _message);
-
-    // TODO: it would be nice to provide ByteBuffers alongside the byte[]s
-
-    /**
-     * Formats the event as an Object that can be serialized.
-     *
-     * @param event The Logging Event.
-     * @return The formatted event.
-     */
-    String toSerializable(final LogEvent _event);
-
-    /**
-     * Returns the content type output by this layout. The base class returns "text/plain".
-     *
-     * @return the content type.
-     */
-    String getContentType();
-
-    /**
-     * Returns a description of the content format.
-     *
-     * @return a Map of key/value pairs describing the Layout-specific content format, or an empty Map if no content
-     * format descriptors are specified.
-     */
-    Map<String, String> getContentFormat();
+	String format(LogEvent _event);
+	
+	void formatThrowable(Throwable _thrown, StringBuilder _sbuf);
+	
+	byte[] getHeader();
+	
+	byte[] getFooter();
+	
+	Charset getCharset();
+	
+	String getContentType();
+	
+	byte[] toByteArray(LogEvent _event);
 }

@@ -30,10 +30,10 @@ public abstract class AbstractAppender implements IAppender {
 	}
 
 	@Override
-	public void append(final LogEvent _message) {
+	public void append(final LogEvent _event) {
 		readLock.lock();
 		try {
-			final byte[] bytes = getLayout().toByteArray(_message);
+			final byte[] bytes = getLayout().toByteArray(_event);
 			if (bytes.length > 0) {
 				manager.write(bytes);
 				if (this.immediateFlush) {

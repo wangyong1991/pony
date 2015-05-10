@@ -5,11 +5,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pony.log.appender.ConsoleAppender;
+import pony.log.appender.FileAppender;
+import pony.log.appender.RandomAccessFileAppender;
+import pony.log.layout.HtmlLayout;
+import pony.log.layout.PatternLayout;
 import pony.util.Charsets;
 import pony.util.StringUtils;
 
@@ -24,7 +31,8 @@ public final class LogConfig {
 	public final static String LOG_ENABLE_FILE = "LOG_ENABLE_FILE";
 	public final static String LOG_CHARSET = "LOG_CHARSET";
 	
-	private final static String LOG_FILE_SUFFIX = ".log";
+	public final static String LOG_FILE_SUFFIX = ".log";
+	public final static String HTML_FILE_SUFFIX = ".html";
 	
 	public final static String DATE_ROLLING = "DATE";
 	public final static String SIZE_ROLLING = "SIZE";
@@ -45,12 +53,14 @@ public final class LogConfig {
 	private static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
 	
 	private static LogLevel logLevel = DEFAULT_LOG_LEVEL;
-	private static String filename = DEFAULT_LOG_FILE + LOG_FILE_SUFFIX;
+	private static String filename = DEFAULT_LOG_FILE;
 	private static int fileSize = DEFAULT_LOG_FILE_SIZE;
 	private static String pattern = DATE_ROLLING;
 	private static boolean enableConsole = DEFAULT_LOG_ENABLE_CONSOLE;
 	private static boolean enableFile = DEFAULT_LOG_ENABLE_FILE;
 	private static Charset charset = DEFAULT_CHARSET;
+	
+	private List<IAppender> appenders = new ArrayList<IAppender>();
 	
 	static{
 		try {
@@ -66,7 +76,7 @@ public final class LogConfig {
 			// log file name
 			final String fileName = props.getProperty(LOG_FILE_NAME);
 			if(null != fileName ){
-				filename = fileName + LOG_FILE_SUFFIX;
+				filename = fileName;
 			}
 			
 			// file size
@@ -130,4 +140,26 @@ public final class LogConfig {
 	public static final Charset getCharset() {
 		return charset;
 	}
+	
+	public LogConfig(){
+		final ILayout htmlLayout = new HtmlLayout();
+		final ILayout patternLayout = new PatternLayout();
+		if(enableConsole){
+			addAppender(new ConsoleAppender("System.out", patternLayout, System.out, true));
+			addAppender(new ConsoleAppender("System.err", patternLayout, System.err, true));
+		}else if(enableFile){
+//			addAppender(new FileAppender("System.out", patternLayout, System.out, true));
+//			addAppender(new RandomAccessFileAppender("System.err", htmlLayout, System.err, true));
+		}
+	}
+	
+	private void addAppender(final IAppender _appender){
+		this.appenders.add(_appender);
+	}
+
+	public final List<IAppender> getAppenders() {
+		return this.appenders;
+	}
+	
+	
 }
